@@ -118,7 +118,7 @@
             height: 100%;
             margin: 0;
             padding: 0;
-            overflow: hidden; /* Changed from auto to prevent scrolling */
+            overflow: hidden;
         }
         .shimmer-text {
             background: linear-gradient(90deg, #0f172a, #d4af37, #0f172a);
@@ -130,7 +130,7 @@
         .floating-hearts i {
             animation: float 4s ease-in-out infinite;
         }
-        /* Cow image styles - made smaller for mobile */
+        /* Cow image styles */
         .cow-container {
             position: absolute;
             z-index: 5;
@@ -138,13 +138,13 @@
         .cow-container-1 {
             top: 61%;
             left: 12%;
-            transform: scale(1.8); /* increased from 1 */
+            transform: scale(1.5);
         }
 
         .cow-container-2 {
             bottom: 45%;
             right: 11%;
-            transform: scale(1.8); /* increased from 1 */
+            transform: scale(1.7);
         }
 
         .cow-image {
@@ -190,17 +190,108 @@
         .fade-out {
             animation: fadeOut 2s ease-in-out forwards;
         }
-        /* Ensure content fits without scrolling */
-        .content-container {
-            height: 100vh;
+        /* Audio overlay styles */
+        #audioOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            color: white;
+            font-family: 'Playfair Display', serif;
+            text-align: center;
+            transition: opacity 1s ease;
+        }
+        .audio-btn {
+            background: linear-gradient(to right, #d4af37, #f7e98e);
+            color: #0f172a;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+        }
+        .audio-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.6);
+        }
+        .audio-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #d4af37;
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+        .audio-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #d4af37;
+        }
+        .audio-subtitle {
+            font-size: 1.1rem;
+            max-width: 80%;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        .audio-controls {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 50;
+            display: flex;
+            gap: 10px;
+        }
+        .audio-control-btn {
+            background: rgba(15, 23, 42, 0.8);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        .audio-control-btn:hover {
+            background: rgba(212, 175, 55, 0.8);
+            transform: scale(1.1);
         }
     </style>
 </head>
 <body class="bg-gradient-to-br from-navy via-light-blue to-soft-blue min-h-screen flex items-center justify-center p-1 sm:p-2">
+    <!-- Audio Overlay -->
+    <div id="audioOverlay">
+        <i class="fas fa-music audio-icon"></i>
+        <h1 class="audio-title">Lobola Ceremony</h1>
+        <p class="audio-subtitle">Click the button below to start the celebration music</p>
+        <button id="audioButton" class="audio-btn">
+            <i class="fas fa-play mr-2"></i> Start Music
+        </button>
+    </div>
+
+    <!-- Audio Controls -->
+    <div class="audio-controls">
+        <button id="playPauseBtn" class="audio-control-btn" style="display: none;">
+            <i class="fas fa-pause"></i>
+        </button>
+        <button id="muteBtn" class="audio-control-btn" style="display: none;">
+            <i class="fas fa-volume-up"></i>
+        </button>
+    </div>
+
     <!-- Cow Images -->
     <div class="cow-container cow-container-1">
         <img src="./images/cow1.jpg" alt="Cow" class="cow-image">
@@ -325,7 +416,7 @@
     </div>
 
     <!-- Hidden Audio Element -->
-    <audio id="backgroundAudio" preload="metadata" autoplay>
+    <audio id="backgroundAudio" preload="metadata" loop>
         <source src="/audio/kgomo.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
@@ -335,25 +426,97 @@
         document.addEventListener('DOMContentLoaded', function() {
             const audio = document.getElementById('backgroundAudio');
             const invitation = document.getElementById('invitation');
+            const audioOverlay = document.getElementById('audioOverlay');
+            const audioButton = document.getElementById('audioButton');
+            const playPauseBtn = document.getElementById('playPauseBtn');
+            const muteBtn = document.getElementById('muteBtn');
             
             let fadeOutStarted = false;
+            let audioStarted = false;
             
             // Set initial volume
-            audio.volume = 1;
+            audio.volume = 0.7;
             
-            // Set start time to 2:00 (120 seconds)
-            audio.currentTime = 101;
-            
-            // Auto-play the audio when page loads
-            const playAudio = () => {
-                audio.play().catch(e => {
-                    console.log("Auto-play was prevented:", e);
-                    // If auto-play is blocked, we'll just continue without audio
-                });
+            // Try to autoplay immediately (will likely fail due to browser policies)
+            const tryAutoplay = () => {
+                const playPromise = audio.play();
+                
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        // Autoplay worked! (unlikely in most browsers)
+                        audioStarted = true;
+                        hideOverlay();
+                        showControls();
+                    }).catch(error => {
+                        // Autoplay was prevented - show the overlay
+                        console.log("Autoplay prevented, showing overlay");
+                        audioOverlay.style.display = 'flex';
+                    });
+                }
             };
             
-            // Try to play audio immediately
-            playAudio();
+            // Start trying to play audio
+            tryAutoplay();
+            
+            // Hide overlay function
+            function hideOverlay() {
+                audioOverlay.style.opacity = '0';
+                setTimeout(() => {
+                    audioOverlay.style.display = 'none';
+                }, 1000);
+            }
+            
+            // Show controls function
+            function showControls() {
+                playPauseBtn.style.display = 'flex';
+                muteBtn.style.display = 'flex';
+            }
+            
+            // Button click handler
+            audioButton.addEventListener('click', function() {
+                if (!audioStarted) {
+                    audio.play().then(() => {
+                        audioStarted = true;
+                        hideOverlay();
+                        showControls();
+                    }).catch(error => {
+                        console.error("Error playing audio:", error);
+                        // If there's an error, try with a different approach
+                        audio.muted = true;
+                        audio.play().then(() => {
+                            audio.muted = false;
+                            audioStarted = true;
+                            hideOverlay();
+                            showControls();
+                        });
+                    });
+                }
+            });
+            
+            // Play/Pause button
+            playPauseBtn.addEventListener('click', function() {
+                if (audio.paused) {
+                    audio.play();
+                    playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                } else {
+                    audio.pause();
+                    playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+                }
+            });
+            
+            // Mute button
+            let isMuted = false;
+            muteBtn.addEventListener('click', function() {
+                if (isMuted) {
+                    audio.muted = false;
+                    muteBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+                    isMuted = false;
+                } else {
+                    audio.muted = true;
+                    muteBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
+                    isMuted = true;
+                }
+            });
             
             // Check current time and trigger fade out at 2:45 (165 seconds)
             audio.addEventListener('timeupdate', function() {
@@ -372,6 +535,15 @@
                         }
                     }, 200);
                 }
+            });
+            
+            // Update play/pause button based on audio state
+            audio.addEventListener('play', function() {
+                playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+            });
+            
+            audio.addEventListener('pause', function() {
+                playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
             });
         });
         
@@ -393,5 +565,5 @@
             });
         });
     </script>
-</body> 
+</body>
 </html>
