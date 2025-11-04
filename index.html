@@ -35,6 +35,7 @@
                         'fadeInUp': 'fadeInUp 1s ease-out',
                         'rotateSlow': 'rotateSlow 20s linear infinite',
                         'shimmer': 'shimmer 2s infinite',
+                        'fadeOut': 'fadeOut 2s ease-in-out forwards',
                     },
                     keyframes: {
                         float: {
@@ -44,6 +45,10 @@
                         fadeIn: {
                             '0%': { opacity: '0' },
                             '100%': { opacity: '1' },
+                        },
+                        fadeOut: {
+                            '0%': { opacity: '1' },
+                            '100%': { opacity: '0' },
                         },
                         'pulse-gentle': {
                             '0%, 100%': { opacity: '1' },
@@ -162,6 +167,26 @@
                 font-size: 1.5rem !important;
             }
         }
+        .fade-out {
+            animation: fadeOut 2s ease-in-out forwards;
+        }
+        /* Music note indicator */
+        /* .music-indicator {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            background: rgba(15, 23, 42, 0.8);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #d4af37;
+            animation: pulse-gentle 2s infinite;
+            cursor: pointer;
+        } */
     </style>
 </head>
 <body class="bg-gradient-to-br from-navy via-light-blue to-soft-blue min-h-screen flex items-center justify-center p-2 sm:p-4">
@@ -176,7 +201,7 @@
     
     <div class="w-full max-w-2xl h-auto flex items-center justify-center mobile-card">
         <!-- Wedding Invitation Card -->
-        <div class="invitation-card rounded-2xl shadow-2xl overflow-hidden w-full h-auto flex flex-col relative animate-zoomIn mobile-card">
+        <div class="invitation-card rounded-2xl shadow-2xl overflow-hidden w-full h-auto flex flex-col relative animate-zoomIn mobile-card" id="invitation">
             <!-- Floating Hearts Background -->
             <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none floating-hearts">
                 <i class="fas fa-heart text-gold opacity-20 absolute top-8 left-8 text-xs sm:text-sm" style="animation-delay: 0s;"></i>
@@ -279,7 +304,7 @@
                 <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-gold to-transparent animate-pulse-gentle"></div>
                 <p class="font-cursive text-base sm:text-lg mb-2 relative z-10 animate-swing">With Love & Joy</p>
                 <div class="flex justify-center space-x-3 mt-1 relative z-10">
-                    <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white bg-opacity-10 flex items-center justify-center transform transition-all duration-300 hover:scale-110 hover:bg-opacity-20 hover:bg-gold hover:text-navy cursor-pointer animate-bounce-gentle" style="animation-delay: 0.1s;">
+                    <!-- <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white bg-opacity-10 flex items-center justify-center transform transition-all duration-300 hover:scale-110 hover:bg-opacity-20 hover:bg-gold hover:text-navy cursor-pointer animate-bounce-gentle" style="animation-delay: 0.1s;">
                         <i class="fab fa-instagram text-xs"></i>
                     </div>
                     <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white bg-opacity-10 flex items-center justify-center transform transition-all duration-300 hover:scale-110 hover:bg-opacity-20 hover:bg-gold hover:text-navy cursor-pointer animate-bounce-gentle" style="animation-delay: 0.2s;">
@@ -287,7 +312,7 @@
                     </div>
                     <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white bg-opacity-10 flex items-center justify-center transform transition-all duration-300 hover:scale-110 hover:bg-opacity-20 hover:bg-gold hover:text-navy cursor-pointer animate-bounce-gentle" style="animation-delay: 0.3s;">
                         <i class="fas fa-envelope text-xs"></i>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="mt-2 text-xs opacity-70 animate-pulse-gentle">
                     <p>#SegoneWedding</p>
@@ -296,7 +321,75 @@
         </div>
     </div>
 
+    <!-- Music Indicator (optional, can be removed) -->
+    <div class="music-indicator" id="musicIndicator" title="Music is playing">
+        <i class="fas fa-music"></i>
+    </div>
+
+    <!-- Hidden Audio Element -->
+    <audio id="backgroundAudio" preload="metadata">
+        <source src="/audio/amazwe.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
     <script>
+        // Audio functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const audio = document.getElementById('backgroundAudio');
+            const invitation = document.getElementById('invitation');
+            const musicIndicator = document.getElementById('musicIndicator');
+            
+            let fadeOutStarted = false;
+            
+            // Set initial volume
+            audio.volume = 0.7;
+            
+            // Set start time to 2:00 (120 seconds)
+            audio.currentTime = 120;
+            
+            // Auto-play the audio when page loads
+            const playAudio = () => {
+                audio.play().catch(e => {
+                    console.log("Auto-play was prevented:", e);
+                    // If auto-play is blocked, show a message or try again after user interaction
+                    musicIndicator.style.backgroundColor = 'rgba(220, 38, 38, 0.8)';
+                    musicIndicator.title = "Click to play music";
+                    musicIndicator.innerHTML = '<i class="fas fa-play"></i>';
+                    
+                    // Add click event to start audio if auto-play was blocked
+                    musicIndicator.addEventListener('click', () => {
+                        audio.play();
+                        musicIndicator.style.backgroundColor = 'rgba(15, 23, 42, 0.8)';
+                        musicIndicator.innerHTML = '<i class="fas fa-music"></i>';
+                        musicIndicator.title = "Music is playing";
+                    });
+                });
+            };
+            
+            // Try to play audio immediately
+            playAudio();
+            
+            // Check current time and trigger fade out at 2:45 (165 seconds)
+            audio.addEventListener('timeupdate', function() {
+                if (audio.currentTime >= 165 && !fadeOutStarted) {
+                    fadeOutStarted = true;
+                    // Apply fade-out animation to the entire invitation
+                    invitation.classList.add('fade-out');
+                    musicIndicator.classList.add('fade-out');
+                    
+                    // Gradually fade out the audio volume
+                    const fadeAudio = setInterval(() => {
+                        if (audio.volume > 0.1) {
+                            audio.volume -= 0.1;
+                        } else {
+                            audio.pause();
+                            clearInterval(fadeAudio);
+                        }
+                    }, 200);
+                }
+            });
+        });
+        
         // Add some interactive animations on hover
         document.addEventListener('DOMContentLoaded', function() {
             const card = document.querySelector('.invitation-card');
