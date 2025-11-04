@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wedding Invitation - Mr. & Mrs. Segone</title>
+    <title>Lobola Ceremony - Keitumetse & Lesego</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
@@ -95,7 +95,7 @@
                         shimmer: {
                             '0%': { backgroundPosition: '-200px 0' },
                             '100%': { backgroundPosition: '200px 0' },
-                        }
+                        },
                     }
                 }
             }
@@ -111,9 +111,9 @@
         }
         html, body {
             height: 100%;
-            overflow: hidden;
             margin: 0;
             padding: 0;
+            overflow: auto;
         }
         .shimmer-text {
             background: linear-gradient(90deg, #0f172a, #d4af37, #0f172a);
@@ -124,6 +124,26 @@
         }
         .floating-hearts i {
             animation: float 4s ease-in-out infinite;
+        }
+        /* Cow image styles */
+        .cow-container {
+            position: absolute;
+            z-index: 5;
+        }
+        .cow-container-1 {
+            top: 560px;
+            left: 50px;
+            transform: scale(1.5);
+        }
+        .cow-container-2 {
+            bottom: 530px;
+            right: 50px;
+            transform: scale(1.5); /* 1.5x bigger */
+            transition: transform 0.3s ease;
+        }
+        .cow-image {
+            width: 60px;
+            height: auto;
         }
         /* Mobile height adjustments */
         @media (max-height: 700px) {
@@ -144,10 +164,19 @@
         }
     </style>
 </head>
-<body class="bg-gradient-to-br from-navy via-light-blue to-soft-blue h-screen flex items-center justify-center p-2 sm:p-4">
-    <div class="w-full max-w-2xl h-auto max-h-[95vh] flex items-center justify-center mobile-card">
+<body class="bg-gradient-to-br from-navy via-light-blue to-soft-blue min-h-screen flex items-center justify-center p-2 sm:p-4">
+    <!-- Cow Images -->
+    <div class="cow-container cow-container-1">
+        <img src="./images/cow1.jpg" alt="Cow" class="cow-image">
+    </div>
+    
+    <div class="cow-container cow-container-2">
+        <img src="./images/cow2.webp" alt="Cow" class="cow-image">
+    </div>
+    
+    <div class="w-full max-w-2xl h-auto flex items-center justify-center mobile-card">
         <!-- Wedding Invitation Card -->
-        <div class="invitation-card rounded-2xl shadow-2xl overflow-hidden w-full h-auto max-h-[90vh] flex flex-col relative animate-zoomIn mobile-card">
+        <div class="invitation-card rounded-2xl shadow-2xl overflow-hidden w-full h-auto flex flex-col relative animate-zoomIn mobile-card">
             <!-- Floating Hearts Background -->
             <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none floating-hearts">
                 <i class="fas fa-heart text-gold opacity-20 absolute top-8 left-8 text-xs sm:text-sm" style="animation-delay: 0s;"></i>
@@ -170,9 +199,9 @@
                 <!-- Animated decorative elements -->
                 <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-gold to-transparent animate-pulse-gentle"></div>
                 
-                <h1 class="text-xl sm:text-2xl md:text-3xl font-cursive mb-1 animate-swing">Wedding Invitation</h1>
+                <h1 class="text-xl sm:text-2xl md:text-3xl font-cursive mb-1 animate-swing">Lobola Ceremony</h1>
                 <div class="w-12 sm:w-14 h-0.5 bg-gold mx-auto my-2 rounded-full animate-pulse-gentle"></div>
-                <p class="text-xs opacity-90 animate-fadeIn mobile-text" style="animation-delay: 0.3s;">You are cordially invited to celebrate the union of</p>
+                <p class="text-xs opacity-90 animate-fadeIn mobile-text" style="animation-delay: 0.3s;">You are invited to celebrate the traditional union of</p>
             </div>
             
             <!-- Couple Names Section -->
@@ -185,7 +214,7 @@
                 </div>
                 
                 <h2 class="text-xl sm:text-2xl md:text-3xl font-serif font-bold text-navy mb-2 animate-fadeInUp shimmer-text mobile-heading">
-                    Mr. & Mrs. Segone
+                    Keitumetse & Lesego
                 </h2>
                 
                 <div class="flex justify-center items-center my-3 animate-pulse-gentle">
@@ -197,7 +226,7 @@
                 </div>
                 
                 <p class="text-gray-600 text-xs max-w-md mx-auto animate-fadeIn mobile-text" style="animation-delay: 0.9s;">
-                    Together with their families, request the pleasure of your company
+                    Together with the Setuke and the Segone families, we request the pleasure of your company
                 </p>
             </div>
             
