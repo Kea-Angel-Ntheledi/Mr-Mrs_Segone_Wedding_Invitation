@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding Invitation - Mr. & Mrs. Segone</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'navy': '#0f172a',
+                        'light-blue': '#1e293b',
+                        'soft-blue': '#334155',
+                        'gold': '#d4af37',
+                    },
+                    fontFamily: {
+                        'cursive': ['Dancing Script', 'cursive'],
+                        'serif': ['Playfair Display', 'serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'fadeIn': 'fadeIn 1.5s ease-in-out',
+                        'pulse-gentle': 'pulse-gentle 2s infinite',
+                        'twinkle': 'twinkle 4s infinite',
+                        'slideUp': 'slideUp 1s ease-out',
+                        'bounce-gentle': 'bounce-gentle 2s infinite',
+                        'swing': 'swing 3s ease-in-out infinite',
+                        'heartbeat': 'heartbeat 1.5s ease-in-out infinite',
+                        'slideInLeft': 'slideInLeft 1s ease-out',
+                        'slideInRight': 'slideInRight 1s ease-out',
+                        'zoomIn': 'zoomIn 1s ease-out',
+                        'fadeInUp': 'fadeInUp 1s ease-out',
+                        'rotateSlow': 'rotateSlow 20s linear infinite',
+                        'shimmer': 'shimmer 2s infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        'pulse-gentle': {
+                            '0%, 100%': { opacity: '1' },
+                            '50%': { opacity: '0.8' },
+                        },
+                        twinkle: {
+                            '0%, 100%': { opacity: '0.3', transform: 'scale(1)' },
+                            '50%': { opacity: '1', transform: 'scale(1.1)' },
+                        },
+                        slideUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        'bounce-gentle': {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-5px)' },
+                        },
+                        swing: {
+                            '0%, 100%': { transform: 'rotate(-3deg)' },
+                            '50%': { transform: 'rotate(3deg)' },
+                        },
+                        heartbeat: {
+                            '0%': { transform: 'scale(1)' },
+                            '25%': { transform: 'scale(1.1)' },
+                            '50%': { transform: 'scale(1)' },
+                            '75%': { transform: 'scale(1.05)' },
+                            '100%': { transform: 'scale(1)' },
+                        },
+                        slideInLeft: {
+                            '0%': { opacity: '0', transform: 'translateX(-20px)' },
+                            '100%': { opacity: '1', transform: 'translateX(0)' },
+                        },
+                        slideInRight: {
+                            '0%': { opacity: '0', transform: 'translateX(20px)' },
+                            '100%': { opacity: '1', transform: 'translateX(0)' },
+                        },
+                        zoomIn: {
+                            '0%': { opacity: '0', transform: 'scale(0.8)' },
+                            '100%': { opacity: '1', transform: 'scale(1)' },
+                        },
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        rotateSlow: {
+                            '0%': { transform: 'rotate(0deg)' },
+                            '100%': { transform: 'rotate(360deg)' },
+                        },
+                        shimmer: {
+                            '0%': { backgroundPosition: '-200px 0' },
+                            '100%': { backgroundPosition: '200px 0' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        .invitation-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+        }
+        .ornament {
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+        }
+        html, body {
+            height: 100%;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+        .shimmer-text {
+            background: linear-gradient(90deg, #0f172a, #d4af37, #0f172a);
+            background-size: 200% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .floating-hearts i {
+            animation: float 4s ease-in-out infinite;
+        }
+        /* Mobile height adjustments */
+        @media (max-height: 700px) {
+            .mobile-card {
+                max-height: 90vh !important;
+                margin: 1rem 0 !important;
+            }
+            .mobile-padding {
+                padding-top: 0.75rem !important;
+                padding-bottom: 0.75rem !important;
+            }
+            .mobile-text {
+                font-size: 0.7rem !important;
+            }
+            .mobile-heading {
+                font-size: 1.5rem !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-navy via-light-blue to-soft-blue h-screen flex items-center justify-center p-2 sm:p-4">
+    <div class="w-full max-w-2xl h-auto max-h-[95vh] flex items-center justify-center mobile-card">
+        <!-- Wedding Invitation Card -->
+        <div class="invitation-card rounded-2xl shadow-2xl overflow-hidden w-full h-auto max-h-[90vh] flex flex-col relative animate-zoomIn mobile-card">
+            <!-- Floating Hearts Background -->
+            <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none floating-hearts">
+                <i class="fas fa-heart text-gold opacity-20 absolute top-8 left-8 text-xs sm:text-sm" style="animation-delay: 0s;"></i>
+                <i class="fas fa-heart text-gold opacity-20 absolute top-16 right-12 text-xs" style="animation-delay: 1s;"></i>
+                <i class="fas fa-heart text-gold opacity-20 absolute bottom-16 left-12 text-xs sm:text-sm" style="animation-delay: 2s;"></i>
+                <i class="fas fa-heart text-gold opacity-20 absolute bottom-8 right-8 text-xs" style="animation-delay: 3s;"></i>
+            </div>
+            
+            <!-- Background decorative elements -->
+            <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+                <div class="absolute -top-6 -left-6 w-20 h-20 rounded-full bg-navy opacity-5 animate-float"></div>
+                <div class="absolute -bottom-6 -right-6 w-28 h-28 rounded-full bg-navy opacity-5 animate-float" style="animation-delay: 2s;"></div>
+                <div class="absolute top-1/5 right-4 sm:right-6 w-4 h-4 rounded-full bg-gold opacity-20 animate-twinkle"></div>
+                <div class="absolute bottom-1/4 left-6 sm:left-8 w-3 h-3 rounded-full bg-gold opacity-30 animate-twinkle" style="animation-delay: 1s;"></div>
+                <div class="absolute top-1/3 left-1/4 w-3 h-3 rounded-full bg-gold opacity-25 animate-bounce-gentle" style="animation-delay: 0.5s;"></div>
+            </div>
+            
+            <!-- Header Section -->
+            <div class="bg-gradient-to-r from-navy to-light-blue text-white py-4 sm:py-5 px-4 sm:px-6 text-center relative overflow-hidden flex-shrink-0 mobile-padding">
+                <!-- Animated decorative elements -->
+                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-gold to-transparent animate-pulse-gentle"></div>
+                
+                <h1 class="text-xl sm:text-2xl md:text-3xl font-cursive mb-1 animate-swing">Wedding Invitation</h1>
+                <div class="w-12 sm:w-14 h-0.5 bg-gold mx-auto my-2 rounded-full animate-pulse-gentle"></div>
+                <p class="text-xs opacity-90 animate-fadeIn mobile-text" style="animation-delay: 0.3s;">You are cordially invited to celebrate the union of</p>
+            </div>
+            
+            <!-- Couple Names Section -->
+            <div class="py-5 sm:py-6 px-4 sm:px-6 text-center relative bg-gradient-to-b from-white to-gray-50 flex-shrink-0 mobile-padding">
+                <!-- Heart icon positioned to not block names -->
+                <div class="mb-3 sm:mb-4 animate-heartbeat">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-navy to-light-blue flex items-center justify-center text-white shadow-lg border-2 sm:border-3 border-white mx-auto">
+                        <i class="fas fa-heart text-base sm:text-lg text-gold"></i>
+                    </div>
+                </div>
+                
+                <h2 class="text-xl sm:text-2xl md:text-3xl font-serif font-bold text-navy mb-2 animate-fadeInUp shimmer-text mobile-heading">
+                    Mr. & Mrs. Segone
+                </h2>
+                
+                <div class="flex justify-center items-center my-3 animate-pulse-gentle">
+                    <div class="w-6 h-0.5 bg-navy opacity-30"></div>
+                    <div class="mx-2">
+                        <i class="fas fa-star text-gold text-xs animate-rotateSlow"></i>
+                    </div>
+                    <div class="w-6 h-0.5 bg-navy opacity-30"></div>
+                </div>
+                
+                <p class="text-gray-600 text-xs max-w-md mx-auto animate-fadeIn mobile-text" style="animation-delay: 0.9s;">
+                    Together with their families, request the pleasure of your company
+                </p>
+            </div>
+            
+            <!-- Wedding Details Section -->
+            <div class="py-4 sm:py-5 px-3 sm:px-4 bg-gradient-to-b from-gray-50 to-white flex-grow flex items-center">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-center w-full">
+                    <!-- Date -->
+                    <div class="bg-white p-3 rounded-lg shadow-md border border-gray-100 transform transition-all duration-300 hover:scale-105 hover:shadow-lg flex flex-col justify-center h-full animate-slideInLeft">
+                        <div class="text-navy mb-1 animate-bounce-gentle" style="animation-delay: 0.2s;">
+                            <i class="fas fa-calendar-alt text-lg sm:text-xl text-gold"></i>
+                        </div>
+                        <h3 class="font-serif font-semibold text-navy text-sm mb-1">Date</h3>
+                        <p class="text-gray-600 text-xs">To Be Confirmed</p>
+                    </div>
+                    
+                    <!-- Time -->
+                    <div class="bg-white p-3 rounded-lg shadow-md border border-gray-100 transform transition-all duration-300 hover:scale-105 hover:shadow-lg flex flex-col justify-center h-full animate-zoomIn" style="animation-delay: 0.4s;">
+                        <div class="text-navy mb-1 animate-bounce-gentle" style="animation-delay: 0.6s;">
+                            <i class="fas fa-clock text-lg sm:text-xl text-gold"></i>
+                        </div>
+                        <h3 class="font-serif font-semibold text-navy text-sm mb-1">Time</h3>
+                        <p class="text-gray-600 text-xs">To Be Confirmed</p>
+                    </div>
+                    
+                    <!-- Venue -->
+                    <div class="bg-white p-3 rounded-lg shadow-md border border-gray-100 transform transition-all duration-300 hover:scale-105 hover:shadow-lg flex flex-col justify-center h-full animate-slideInRight" style="animation-delay: 0.6s;">
+                        <div class="text-navy mb-1 animate-bounce-gentle" style="animation-delay: 0.8s;">
+                            <i class="fas fa-map-marker-alt text-lg sm:text-xl text-gold"></i>
+                        </div>
+                        <h3 class="font-serif font-semibold text-navy text-sm mb-1">Venue</h3>
+                        <p class="text-gray-600 text-xs">To Be Confirmed</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- RSVP Section -->
+            <div class="py-4 sm:py-5 px-4 sm:px-6 text-center bg-gradient-to-b from-white to-gray-50 flex-shrink-0 mobile-padding">
+                <h3 class="text-base sm:text-lg font-serif font-semibold text-navy mb-3 animate-fadeIn">Kindly Respond By</h3>
+                <div class="inline-block bg-gradient-to-r from-navy to-light-blue text-white py-2 px-5 sm:px-6 rounded-full font-medium shadow-md transform transition-all duration-300 hover:scale-105 hover:shadow-lg border border-gold border-opacity-20 text-xs animate-pulse-gentle">
+                    To Be Confirmed
+                </div>
+                
+                <p class="mt-3 sm:mt-4 text-gray-600 text-xs max-w-md mx-auto animate-fadeIn italic mobile-text">
+                    We look forward to sharing this special day with you. Further details will be provided once confirmed.
+                </p>
+            </div>
+            
+            <!-- Footer -->
+            <div class="bg-gradient-to-r from-navy to-light-blue text-white py-4 text-center relative overflow-hidden flex-shrink-0 mobile-padding">
+                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-gold to-transparent animate-pulse-gentle"></div>
+                <p class="font-cursive text-base sm:text-lg mb-2 relative z-10 animate-swing">With Love & Joy</p>
+                <div class="flex justify-center space-x-3 mt-1 relative z-10">
+                    <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white bg-opacity-10 flex items-center justify-center transform transition-all duration-300 hover:scale-110 hover:bg-opacity-20 hover:bg-gold hover:text-navy cursor-pointer animate-bounce-gentle" style="animation-delay: 0.1s;">
+                        <i class="fab fa-instagram text-xs"></i>
+                    </div>
+                    <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white bg-opacity-10 flex items-center justify-center transform transition-all duration-300 hover:scale-110 hover:bg-opacity-20 hover:bg-gold hover:text-navy cursor-pointer animate-bounce-gentle" style="animation-delay: 0.2s;">
+                        <i class="fab fa-facebook-f text-xs"></i>
+                    </div>
+                    <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white bg-opacity-10 flex items-center justify-center transform transition-all duration-300 hover:scale-110 hover:bg-opacity-20 hover:bg-gold hover:text-navy cursor-pointer animate-bounce-gentle" style="animation-delay: 0.3s;">
+                        <i class="fas fa-envelope text-xs"></i>
+                    </div>
+                </div>
+                <div class="mt-2 text-xs opacity-70 animate-pulse-gentle">
+                    <p>#SegoneWedding</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add some interactive animations on hover
+        document.addEventListener('DOMContentLoaded', function() {
+            const card = document.querySelector('.invitation-card');
+            
+            // Add subtle tilt effect on mouse move
+            card.addEventListener('mousemove', (e) => {
+                const { left, top, width, height } = card.getBoundingClientRect();
+                const x = (e.clientX - left) / width - 0.5;
+                const y = (e.clientY - top) / height - 0.5;
+                
+                card.style.transform = `perspective(1000px) rotateY(${x * 5}deg) rotateX(${-y * 5}deg) scale3d(1.02, 1.02, 1.02)`;
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateY(0) rotateX(0) scale3d(1, 1, 1)';
+            });
+        });
+    </script>
+</body>
+</html>
